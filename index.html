@@ -2388,6 +2388,8 @@
       @media (max-width: 720px) {
         :root {
           --mobile-stack-top: 6px;
+          --mobile-phrase-top: 68px;
+          --mobile-coach-top: 178px;
           --mobile-nav-height: 0px;
         }
 
@@ -2474,11 +2476,13 @@
         }
 
         .tabs {
+          min-width: 0;
           grid-template-columns: repeat(3, minmax(0, 1fr));
           gap: 4px;
         }
 
         .tab {
+          min-width: 0;
           min-height: 48px;
           flex-direction: row;
           gap: 5px;
@@ -2487,6 +2491,13 @@
           background: transparent;
           color: var(--muted);
           font-size: 0.78rem;
+        }
+
+        .tab > span:last-child {
+          min-width: 0;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
         }
 
         .tab[aria-selected="true"] {
@@ -2502,8 +2513,9 @@
 
         .phrase-picker {
           position: sticky;
-          top: calc(68px + env(safe-area-inset-top));
+          top: calc(var(--mobile-phrase-top) + env(safe-area-inset-top));
           z-index: 38;
+          isolation: isolate;
           gap: 8px;
           margin: 0 0 10px;
           border-radius: 15px;
@@ -2532,8 +2544,9 @@
 
         .coach {
           position: sticky;
-          top: calc(132px + env(safe-area-inset-top));
+          top: calc(var(--mobile-coach-top) + env(safe-area-inset-top));
           z-index: 30;
+          isolation: isolate;
           box-shadow: 0 9px 24px rgba(18, 49, 75, 0.14);
         }
 
@@ -3302,9 +3315,14 @@
           return;
         }
         const isBritish = /^en[-_]GB/i.test(voice.lang);
-        const language = isBritish ? "English UK" : voice.lang.replace(/[-_].*$/, "").toUpperCase();
+        const languageCode = voice.lang.toUpperCase().replace("_", "-");
+        const language = isBritish
+          ? "English UK"
+          : languageCode.startsWith("EN-")
+            ? `English ${languageCode.slice(3, 5)}`
+            : languageCode;
         const shortName = voice.name.replace(/\s*-\s*English(?:\s*\([^)]*\))?$/i, "").trim();
-        const natural = /(natural|neural|enhanced)/i.test(voice.name);
+        const natural = /(natural|neural|enhanced|google\s+uk\s+english\s+female)/i.test(voice.name);
         els.voiceName.textContent = shortName || voice.name;
         els.voiceMeta.textContent = `${language} · ${natural ? "более живое звучание" : "чёткое произношение"}`;
         els.voiceStatus.textContent = natural ? "Живой" : "Готов";
@@ -3326,25 +3344,32 @@
       function selectedVoice() {
         const british = state.voices.filter((voice) => /^en[-_]GB/i.test(voice.lang));
         const preferredNames = [
+          /Google UK English Female/i,
           /Microsoft.*Sonia.*Natural/i,
           /Microsoft.*Libby.*Natural/i,
           /Microsoft.*Ryan.*Natural/i,
           /Microsoft.*Jenny.*Natural/i,
           /Microsoft.*(Natural|Neural|Enhanced|Online)/i,
-          /Google UK English Female/i,
+          /(?:Apple|Siri).*?(?:Daniel|Serena|Karen|Moira)/i,
+          /\b(?:Daniel|Serena|Karen|Moira|Samantha|Victoria)\b/i,
           /Microsoft.*Sonia/i,
           /Microsoft.*Libby/i,
           /Microsoft.*Hazel/i,
           /Microsoft.*George/i,
-          /\bDaniel\b/i,
-          /\bMartha\b/i,
-          /\bKaren\b/i
+          /\bMartha\b/i
         ];
         for (const pattern of preferredNames) {
           const match = state.voices.find((voice) => pattern.test(voice.name) && /^en[-_]/i.test(voice.lang));
           if (match) return match;
         }
-        return british.find((voice) => voice.default)
+        const lessNatural = /\b(?:Rocko|Eddy|Flo)\b/i;
+        const humanBritish = british.filter((voice) => !lessNatural.test(voice.name));
+        const humanEnglish = state.voices.filter((voice) => !lessNatural.test(voice.name));
+        return humanBritish.find((voice) => voice.default)
+          || humanBritish[0]
+          || humanEnglish.find((voice) => voice.default)
+          || humanEnglish[0]
+          || british.find((voice) => voice.default)
           || british[0]
           || state.voices.find((voice) => voice.default && /^en[-_]/i.test(voice.lang))
           || state.voices.find((voice) => /^en[-_]/i.test(voice.lang))
