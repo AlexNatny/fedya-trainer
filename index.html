@@ -2820,9 +2820,9 @@
             <h1>My friend Fedya</h1>
             <p>Подготовка выступления перед классом</p>
             <div class="brand-meta" aria-label="План тренировки">
-              <span class="brand-pill">7 фраз</span>
+              <span class="brand-pill">5 фраз</span>
               <span class="brand-pill">слушай → повторяй</span>
-              <span class="brand-pill brand-progress-pill" id="headerProgress">0 из 7 выучено</span>
+              <span class="brand-pill brand-progress-pill" id="headerProgress">0 из 5 выучено</span>
             </div>
           </div>
         </div>
@@ -2867,7 +2867,7 @@
           <div class="phrase-picker" aria-label="Быстрый выбор фразы">
             <div class="phrase-picker-head">
               <strong>Выбери фразу</strong>
-              <span id="phrasePickerCurrent">1 / 7</span>
+              <span id="phrasePickerCurrent">1 / 5</span>
             </div>
             <div class="phrase-buttons" id="phraseButtons"></div>
           </div>
@@ -2880,7 +2880,7 @@
                 </div>
                 <div class="progress-block" aria-label="Прогресс заучивания">
                   <div class="progress-bar" aria-hidden="true"><span id="progressFill"></span></div>
-                  <span id="progressText">0 из 7</span>
+                  <span id="progressText">0 из 5</span>
                 </div>
               </div>
               <div class="sentence-list" id="sentenceList"></div>
@@ -2894,7 +2894,7 @@
                 </div>
                 <div class="coach-head-side">
                   <div class="sound-wave" id="coachWave" aria-hidden="true"><span></span><span></span><span></span></div>
-                  <span class="coach-step" id="coachStep">1 из 7</span>
+                  <span class="coach-step" id="coachStep">1 из 5</span>
                 </div>
                 <div class="coach-progress" aria-hidden="true"><span id="coachProgressFill"></span></div>
               </div>
@@ -2958,7 +2958,7 @@
               <div class="stage-content">
                 <div class="stage-meta">
                   <span>My friend Fedya</span>
-                  <span class="stage-counter" id="stageCounter">1 / 7</span>
+                  <span class="stage-counter" id="stageCounter">1 / 5</span>
                   <div class="sound-wave" id="stageWave" aria-hidden="true"><span></span><span></span><span></span></div>
                 </div>
                 <div class="stage-sentence" id="stageSentence"></div>
@@ -2988,7 +2988,7 @@
               <div class="quiz-status">
                 <span class="quiz-label">Мини-тест</span>
                 <span class="quiz-status-copy">
-                  <span class="quiz-progress" id="quizProgress">Вопрос 1 из 7</span>
+                  <span class="quiz-progress" id="quizProgress">Вопрос 1 из 5</span>
                   <span id="quizScore">Верно: 0 из 0</span>
                 </span>
               </div>
@@ -3007,7 +3007,7 @@
               <div class="quiz-final" id="quizFinal" hidden>
                 <div class="quiz-final-icon" aria-hidden="true">✓</div>
                 <h2>Тест завершён!</h2>
-                <div class="quiz-final-score" id="quizFinalScore">0 из 7</div>
+                <div class="quiz-final-score" id="quizFinalScore">0 из 5</div>
                 <p class="quiz-final-message" id="quizFinalMessage"></p>
                 <button class="button button-primary" id="quizRestart" type="button">Пройти ещё раз</button>
               </div>
@@ -3025,60 +3025,44 @@
 
       const sentences = [
         {
-          text: "Hello! Meet my friend Fedya.",
-          ipa: "/həˈləʊ miːt maɪ frend ˈfedjə/",
-          hint: "Хэло́у! Мит май фрэнд Фе́дя.",
-          translation: "Привет! Познакомьтесь с моим другом Федей.",
-          chunks: "Hello! / Meet my friend Fedya.",
-          words: [["hello", "привет"], ["meet", "познакомьтесь"], ["friend", "друг"]]
+          text: "Hi! Fedya is my friend.",
+          ipa: "/haɪ ˈfedjə ɪz maɪ frend/",
+          hint: "Хай! Фе́дя из май фрэнд.",
+          translation: "Привет! Федя — мой друг.",
+          chunks: "Hi! / Fedya is my friend.",
+          words: [["friend", "друг"]]
         },
         {
-          text: "He is nine.",
-          ipa: "/hiː ɪz naɪn/",
-          hint: "Хи из найн.",
-          translation: "Ему девять лет.",
-          chunks: "He is / nine.",
-          words: [["he", "он"], ["nine", "девять"]]
+          text: "Fedya is nine.",
+          ipa: "/ˈfedjə ɪz naɪn/",
+          hint: "Фе́дя из найн.",
+          translation: "Феде девять лет.",
+          chunks: "Fedya / is nine.",
+          words: [["nine", "девять"]]
         },
         {
-          text: "He is kind and funny.",
-          ipa: "/hiː ɪz kaɪnd ənd ˈfʌni/",
-          hint: "Хи из кайнд энд фа́ни.",
-          translation: "Он добрый и весёлый.",
-          chunks: "He is / kind and funny.",
-          words: [["kind", "добрый"], ["funny", "весёлый"]]
+          text: "He likes football.",
+          ipa: "/hiː laɪks ˈfʊtbɔːl/",
+          hint: "Хи лайкс футбо́л.",
+          translation: "Он любит футбол.",
+          chunks: "He likes / football.",
+          words: [["likes", "любит"], ["football", "футбол"]]
         },
         {
-          text: "He likes books and games.",
-          ipa: "/hiː laɪks bʊks ənd ɡeɪmz/",
-          hint: "Хи лайкс букс энд гэймз.",
-          translation: "Он любит книги и игры.",
-          chunks: "He likes / books and games.",
-          words: [["likes", "любит"], ["books", "книги"], ["games", "игры"]]
+          text: "He has a red ball.",
+          ipa: "/hiː hæz ə red bɔːl/",
+          hint: "Хи хэз э рэд бо́л.",
+          translation: "У него есть красный мяч.",
+          chunks: "He has / a red ball.",
+          words: [["has", "имеет"], ["red", "красный"], ["ball", "мяч"]]
         },
         {
-          text: "He can draw well.",
-          ipa: "/hiː kæn drɔː wel/",
-          hint: "Хи кэн дро уэл.",
-          translation: "Он умеет хорошо рисовать.",
-          chunks: "He can / draw well.",
-          words: [["can", "умеет"], ["draw", "рисовать"], ["well", "хорошо"]]
-        },
-        {
-          text: "We have fun at school.",
-          ipa: "/wiː hæv fʌn ət skuːl/",
-          hint: "Уи хэв фан эт скул.",
-          translation: "Нам весело в школе.",
-          chunks: "We have fun / at school.",
-          words: [["we", "мы"], ["fun", "веселье"], ["school", "школа"]]
-        },
-        {
-          text: "Fedya is a good friend.",
-          ipa: "/ˈfedjə ɪz ə ɡʊd frend/",
-          hint: "Фе́дя из э гуд фрэнд.",
-          translation: "Федя - хороший друг.",
-          chunks: "Fedya is / a good friend.",
-          words: [["good", "хороший"], ["friend", "друг"]]
+          text: "We play in a park.",
+          ipa: "/wiː pleɪ ɪn ə pɑːk/",
+          hint: "Уи плэй ин э па́ак.",
+          translation: "Мы играем в парке.",
+          chunks: "We play / in a park.",
+          words: [["play", "играем"], ["park", "парк"]]
         }
       ];
 
@@ -3168,7 +3152,7 @@
 
       function readLearned() {
         try {
-          const saved = JSON.parse(localStorage.getItem("fedya-learned-v1") || "[]");
+          const saved = JSON.parse(localStorage.getItem("fedya-learned-v2") || "[]");
           if (Array.isArray(saved)) {
             state.learned = new Set(saved.filter((value) => Number.isInteger(value) && value >= 0 && value < sentences.length));
           }
@@ -3179,7 +3163,7 @@
 
       function saveLearned() {
         try {
-          localStorage.setItem("fedya-learned-v1", JSON.stringify([...state.learned]));
+          localStorage.setItem("fedya-learned-v2", JSON.stringify([...state.learned]));
         } catch (_error) {
           // The page still works when private browsing blocks storage.
         }
@@ -3324,7 +3308,8 @@
         els.voiceSelect.innerHTML = `<option value="">Автоматически (рекомендуется)</option>` + voices
           .map((voice) => {
             const shortName = voice.name.replace(/\s*[-–—]\s*English(?:\s*\([^)]*\))?$/i, "").trim() || voice.name;
-            return `<option value="${voice.voiceURI}">${shortName} (${voice.lang})</option>`;
+            const recommended = /Google UK English Female/i.test(voice.name);
+            return `<option value="${voice.voiceURI}">${shortName}${recommended ? " — рекомендуется" : ""} (${voice.lang})</option>`;
           })
           .join("");
         if (voices.some((voice) => voice.voiceURI === current)) {
