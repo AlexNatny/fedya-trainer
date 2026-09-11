@@ -1992,6 +1992,373 @@
           min-height: calc(100svh - 88px);
         }
       }
+
+      /* Быстрый выбор фразы и лёгкая верхняя навигация */
+      .voice-details {
+        display: none !important;
+      }
+
+      .voice-badge {
+        display: inline-flex;
+        min-height: 42px;
+        align-items: center;
+        border: 1px solid rgba(255, 255, 255, 0.28);
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.1);
+        color: #e7f4f8;
+        padding: 0 12px;
+        font-size: 0.82rem;
+        font-weight: 800;
+        white-space: nowrap;
+      }
+
+      .phrase-picker {
+        display: grid;
+        gap: 10px;
+        margin: 0 0 16px;
+        border: 1px solid #bddce7;
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.95);
+        padding: 13px 14px;
+        box-shadow: 0 10px 28px rgba(23, 48, 69, 0.07);
+      }
+
+      .phrase-picker-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        color: var(--navy);
+      }
+
+      .phrase-picker-head strong {
+        font-size: 0.95rem;
+      }
+
+      .phrase-picker-head span {
+        border-radius: 999px;
+        background: var(--cyan-soft);
+        color: var(--blue);
+        padding: 4px 9px;
+        font-size: 0.78rem;
+        font-weight: 850;
+      }
+
+      .phrase-buttons {
+        display: grid;
+        grid-template-columns: repeat(7, minmax(0, 1fr));
+        gap: 7px;
+      }
+
+      .phrase-button {
+        display: grid;
+        min-height: 44px;
+        place-items: center;
+        border: 1px solid var(--line);
+        border-radius: 11px;
+        background: #f6fafc;
+        color: var(--navy);
+        font-size: 0.9rem;
+        font-weight: 900;
+      }
+
+      .phrase-button:hover {
+        border-color: var(--cyan);
+        background: var(--cyan-soft);
+      }
+
+      .phrase-button.is-active {
+        border-color: var(--navy);
+        background: var(--navy);
+        color: #fff;
+        box-shadow: 0 5px 13px rgba(18, 49, 75, 0.18);
+      }
+
+      @media (max-width: 720px) {
+        :root {
+          --mobile-stack-top: 6px;
+          --mobile-nav-height: 0px;
+        }
+
+        .app-shell {
+          padding-bottom: max(22px, env(safe-area-inset-bottom));
+        }
+
+        .voice-badge {
+          grid-column: 1 / -1;
+          grid-row: 2;
+          justify-content: center;
+          min-height: 34px;
+          border: 0;
+          background: transparent;
+          padding: 0;
+          font-size: 0.76rem;
+        }
+
+        .main-nav {
+          position: sticky;
+          top: max(var(--mobile-stack-top), env(safe-area-inset-top));
+          right: auto;
+          bottom: auto;
+          left: auto;
+          z-index: 45;
+          width: 100%;
+          margin: 10px 0 9px;
+          padding: 5px;
+          border: 1px solid rgba(18, 49, 75, 0.12);
+          border-radius: 16px;
+          background: rgba(255, 255, 255, 0.96);
+          box-shadow: 0 8px 22px rgba(18, 49, 75, 0.1);
+          backdrop-filter: blur(16px);
+        }
+
+        .tabs {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+          gap: 4px;
+        }
+
+        .tab {
+          min-height: 48px;
+          flex-direction: row;
+          gap: 5px;
+          border: 1px solid transparent;
+          border-radius: 11px;
+          background: transparent;
+          color: var(--muted);
+          font-size: 0.78rem;
+        }
+
+        .tab[aria-selected="true"] {
+          border-color: #b9dce6;
+          background: var(--cyan-soft);
+          color: var(--navy);
+          box-shadow: none;
+        }
+
+        .tab-icon {
+          font-size: 0.95rem;
+        }
+
+        .phrase-picker {
+          position: sticky;
+          top: calc(68px + env(safe-area-inset-top));
+          z-index: 38;
+          gap: 8px;
+          margin: 0 0 10px;
+          border-radius: 15px;
+          padding: 10px;
+          box-shadow: 0 8px 20px rgba(23, 48, 69, 0.1);
+        }
+
+        .phrase-picker-head strong {
+          font-size: 0.86rem;
+        }
+
+        .phrase-picker-head span {
+          padding: 3px 8px;
+          font-size: 0.72rem;
+        }
+
+        .phrase-buttons {
+          gap: 5px;
+        }
+
+        .phrase-button {
+          min-height: 42px;
+          border-radius: 10px;
+          font-size: 0.86rem;
+        }
+
+        .coach {
+          position: sticky;
+          top: calc(132px + env(safe-area-inset-top));
+          z-index: 30;
+          box-shadow: 0 9px 24px rgba(18, 49, 75, 0.14);
+        }
+
+        .coach .info-row {
+          display: none;
+        }
+
+        .coach .coach-hint-row,
+        .coach .coach-translation-row {
+          display: block;
+        }
+
+        .coach .coach-nav,
+        .coach .practice-steps {
+          display: none;
+        }
+
+        .coach .coach-body {
+          padding: 14px;
+        }
+
+        .coach .coach-audio {
+          margin-bottom: 8px;
+        }
+
+        .coach .coach-learned {
+          min-height: 46px;
+        }
+
+        .coach .info-row {
+          padding: 8px 0 0;
+          border-top: 0;
+        }
+
+        .coach .info-row strong {
+          display: none;
+        }
+
+        .coach .info-row p {
+          margin: 0;
+          font-size: 0.9rem;
+        }
+
+        .coach .coach-hint-row p {
+          color: var(--blue);
+          font-weight: 750;
+        }
+
+        .coach .coach-translation-row p {
+          color: var(--muted);
+        }
+
+        .coach-chunks {
+          margin-top: 7px;
+          padding: 5px 8px;
+          font-size: 0.84rem;
+        }
+
+        .coach-audio #coachListen {
+          min-height: 52px;
+          font-size: 0.98rem;
+        }
+
+        .coach-audio .button:not(#coachListen) {
+          min-height: 44px;
+          font-size: 0.78rem;
+        }
+
+        .sentence-select {
+          cursor: pointer;
+        }
+
+        .notice {
+          bottom: max(14px, env(safe-area-inset-bottom));
+        }
+      }
+
+      @media (max-width: 390px) {
+        .voice-badge {
+          font-size: 0.72rem;
+        }
+
+        .tab {
+          gap: 3px;
+          padding-inline: 2px;
+          font-size: 0.72rem;
+        }
+
+        .phrase-button {
+          min-height: 39px;
+          font-size: 0.8rem;
+        }
+
+        .coach .coach-body {
+          padding: 12px;
+        }
+      }
+
+      @media (max-width: 720px) {
+        /* Выбранная фраза остаётся перед глазами, пока список прокручивается. */
+        .coach {
+          max-height: 252px;
+          overflow: hidden;
+        }
+
+        .coach-head {
+          min-height: 44px;
+          padding-block: 10px;
+        }
+
+        .coach .coach-body {
+          overflow: hidden;
+          padding: 11px 14px 12px;
+        }
+
+        .coach .coach-sentence {
+          display: -webkit-box;
+          max-height: 52px;
+          overflow: hidden;
+          -webkit-box-orient: vertical;
+          -webkit-line-clamp: 2;
+          font-size: clamp(1.48rem, 7.2vw, 2rem);
+        }
+
+        .coach .coach-chunks {
+          display: none;
+        }
+
+        .coach .coach-audio {
+          grid-template-columns: 1fr 1fr;
+          gap: 6px;
+          margin: 7px 0 5px;
+        }
+
+        .coach .coach-audio #coachListen {
+          min-height: 48px;
+          font-size: 0.96rem;
+        }
+
+        .coach .coach-audio #coachSlow,
+        .coach .coach-audio #coachRepeat {
+          min-height: 38px;
+          font-size: 0.74rem;
+        }
+
+        .coach .coach-learned,
+        .coach .coach-nav,
+        .coach .practice-steps {
+          display: none;
+        }
+
+        .coach .info-row {
+          display: none;
+          border: 0;
+          padding: 2px 0 0;
+        }
+
+        .coach .coach-hint-row,
+        .coach .coach-translation-row {
+          display: block;
+        }
+
+        .coach .info-row strong {
+          display: none;
+        }
+
+        .coach .info-row p {
+          display: -webkit-box;
+          max-height: 21px;
+          overflow: hidden;
+          -webkit-box-orient: vertical;
+          -webkit-line-clamp: 1;
+          margin: 0;
+          font-size: 0.84rem;
+          line-height: 1.35;
+        }
+
+        .coach .coach-hint-row p {
+          color: var(--blue);
+          font-weight: 750;
+        }
+
+        .coach .coach-translation-row p {
+          color: var(--muted);
+        }
+      }
     </style>
   </head>
   <body>
@@ -2015,6 +2382,7 @@
               </select>
             </label>
           </details>
+          <span class="voice-badge" aria-label="Выбран один английский голос English UK">🔊 English UK</span>
           <button class="button button-primary" id="playAll" type="button">▶ Слушать всё</button>
           <button class="button button-ghost-light" id="stopSpeech" type="button">■ Стоп</button>
         </div>
@@ -2042,6 +2410,13 @@
               <label class="switch"><input id="showHints" type="checkbox" checked /> Произношение</label>
               <label class="switch"><input id="showTranslations" type="checkbox" checked /> Перевод</label>
             </div>
+          </div>
+          <div class="phrase-picker" aria-label="Быстрый выбор фразы">
+            <div class="phrase-picker-head">
+              <strong>Выбери фразу</strong>
+              <span id="phrasePickerCurrent">1 / 7</span>
+            </div>
+            <div class="phrase-buttons" id="phraseButtons"></div>
           </div>
           <div class="learn-grid">
             <div class="panel list-panel">
@@ -2241,6 +2616,8 @@
           quiz: document.getElementById("quizView")
         },
         sentenceList: document.getElementById("sentenceList"),
+        phraseButtons: document.getElementById("phraseButtons"),
+        phrasePickerCurrent: document.getElementById("phrasePickerCurrent"),
         showHints: document.getElementById("showHints"),
         showTranslations: document.getElementById("showTranslations"),
         voiceSelect: document.getElementById("voiceSelect"),
@@ -2376,8 +2753,18 @@
         updateProgress();
       }
 
+      function renderPhrasePicker() {
+        const current = state.selected + 1;
+        els.phrasePickerCurrent.textContent = `${current} / ${sentences.length}`;
+        els.phraseButtons.innerHTML = sentences.map((_sentence, index) => {
+          const active = index === state.selected;
+          return `<button class="phrase-button${active ? " is-active" : ""}" type="button" data-phrase-index="${index}" aria-label="Выбрать фразу ${index + 1}" aria-pressed="${active}">${index + 1}</button>`;
+        }).join("");
+      }
+
       function renderCoach() {
         const sentence = sentences[state.selected];
+        renderPhrasePicker();
         els.coachStep.textContent = `${state.selected + 1} из ${sentences.length}`;
         els.coachSentence.textContent = sentence.text;
         els.coachChunks.textContent = sentence.chunks;
@@ -2434,12 +2821,25 @@
       }
 
       function selectedVoice() {
-        const requested = els.voiceSelect.value;
-        if (requested) return state.voices.find((voice) => voice.voiceURI === requested) || null;
-        return state.voices.find((voice) => /en-GB/i.test(voice.lang) && voice.default)
-          || state.voices.find((voice) => /en-GB/i.test(voice.lang))
-          || state.voices.find((voice) => voice.default)
-          || state.voices[0]
+        const british = state.voices.filter((voice) => /^en[-_]GB/i.test(voice.lang));
+        const preferredNames = [
+          /Google UK English Female/i,
+          /Microsoft.*Sonia/i,
+          /Microsoft.*Libby/i,
+          /Microsoft.*Hazel/i,
+          /Microsoft.*George/i,
+          /\bDaniel\b/i,
+          /\bMartha\b/i,
+          /\bKaren\b/i
+        ];
+        for (const pattern of preferredNames) {
+          const match = state.voices.find((voice) => pattern.test(voice.name) && /^en[-_]/i.test(voice.lang));
+          if (match) return match;
+        }
+        return british.find((voice) => voice.default)
+          || british[0]
+          || state.voices.find((voice) => voice.default && /^en[-_]/i.test(voice.lang))
+          || state.voices.find((voice) => /^en[-_]/i.test(voice.lang))
           || null;
       }
 
@@ -2595,7 +2995,12 @@
           return;
         }
         const selectButton = event.target.closest("button[data-select]");
-        if (selectButton) selectSentence(Number(selectButton.dataset.select), true);
+        if (selectButton) selectSentence(Number(selectButton.dataset.select));
+      });
+
+      els.phraseButtons.addEventListener("click", (event) => {
+        const button = event.target.closest("button[data-phrase-index]");
+        if (button) selectSentence(Number(button.dataset.phraseIndex));
       });
 
       els.sentenceList.addEventListener("change", (event) => {
