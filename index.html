@@ -257,6 +257,9 @@
         background: rgba(255, 255, 255, 0.12);
         color: #fff;
         padding: 0 38px 0 12px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
       }
 
       .voice-field option {
@@ -823,6 +826,7 @@
         font-size: clamp(1.55rem, 3vw, 2.15rem);
         line-height: 1.2;
         letter-spacing: -0.035em;
+        overflow-wrap: anywhere;
       }
 
       .coach-chunks {
@@ -1894,6 +1898,7 @@
 
         .voice-details summary {
           display: flex;
+          min-width: 0;
           min-height: 46px;
           list-style: none;
           align-items: center;
@@ -1905,6 +1910,9 @@
           font-size: 0.86rem;
           font-weight: 800;
           cursor: pointer;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
         }
 
         .voice-details summary::-webkit-details-marker {
@@ -2300,9 +2308,6 @@
       }
 
       /* Быстрый выбор фразы и лёгкая верхняя навигация */
-      .voice-details {
-        display: none !important;
-      }
 
       .voice-badge {
         display: inline-flex;
@@ -2470,9 +2475,10 @@
           padding: 5px;
           border: 1px solid rgba(18, 49, 75, 0.12);
           border-radius: 16px;
-          background: rgba(255, 255, 255, 0.96);
+          background: #fff;
           box-shadow: 0 8px 22px rgba(18, 49, 75, 0.1);
-          backdrop-filter: blur(16px);
+          backdrop-filter: none;
+          contain: paint;
         }
 
         .tabs {
@@ -2516,6 +2522,8 @@
           top: calc(var(--mobile-phrase-top) + env(safe-area-inset-top));
           z-index: 38;
           isolation: isolate;
+          background: #fff;
+          contain: paint;
           gap: 8px;
           margin: 0 0 10px;
           border-radius: 15px;
@@ -2676,7 +2684,7 @@
       @media (max-width: 720px) {
         /* Выбранная фраза остаётся перед глазами, пока список прокручивается. */
         .coach {
-          max-height: 300px;
+          max-height: none;
           overflow: hidden;
         }
 
@@ -2730,11 +2738,11 @@
         }
 
         .coach .coach-sentence {
-          display: -webkit-box;
-          max-height: 52px;
-          overflow: hidden;
-          -webkit-box-orient: vertical;
-          -webkit-line-clamp: 2;
+          display: block;
+          max-height: none;
+          overflow: visible;
+          -webkit-box-orient: initial;
+          -webkit-line-clamp: unset;
           font-size: clamp(1.48rem, 7.2vw, 2rem);
         }
 
@@ -2819,24 +2827,15 @@
           </div>
         </div>
         <div class="header-actions">
-          <details class="voice-details">
-            <summary>Настроить голос</summary>
+          <details class="voice-details" open>
+            <summary id="voiceSummary">Выбрать голос</summary>
             <label class="voice-field" for="voiceSelect">
               Английский голос
               <select id="voiceSelect" aria-label="Выбор английского голоса">
-                <option value="">Автоматически</option>
+                <option value="">Автоматически (рекомендуется)</option>
               </select>
             </label>
           </details>
-          <div class="voice-card" id="voiceCard" aria-live="polite" aria-label="Выбранный английский голос">
-            <span class="voice-card-icon" aria-hidden="true">🔊</span>
-            <span class="voice-card-copy">
-              <span class="voice-card-label">Английский голос</span>
-              <strong id="voiceName">English UK</strong>
-              <span class="voice-card-meta" id="voiceMeta">Один спокойный голос для всех фраз</span>
-            </span>
-            <span class="voice-card-status" id="voiceStatus">Авто</span>
-          </div>
           <button class="button button-primary" id="playAll" type="button">▶ Слушать всё</button>
           <button class="button button-ghost-light" id="stopSpeech" type="button">■ Стоп</button>
         </div>
@@ -3096,9 +3095,7 @@
         showHints: document.getElementById("showHints"),
         showTranslations: document.getElementById("showTranslations"),
         voiceSelect: document.getElementById("voiceSelect"),
-        voiceName: document.getElementById("voiceName"),
-        voiceMeta: document.getElementById("voiceMeta"),
-        voiceStatus: document.getElementById("voiceStatus"),
+        voiceSummary: document.getElementById("voiceSummary"),
         headerProgress: document.getElementById("headerProgress"),
         progressFill: document.getElementById("progressFill"),
         progressText: document.getElementById("progressText"),
@@ -3307,25 +3304,15 @@
       }
 
       function updateVoiceCard(voice = selectedVoice()) {
-        if (!els.voiceName || !els.voiceMeta || !els.voiceStatus) return;
+        if (!els.voiceSummary) return;
         if (!voice) {
-          els.voiceName.textContent = "English UK";
-          els.voiceMeta.textContent = "Браузер подберёт один английский голос";
-          els.voiceStatus.textContent = "Авто";
+          els.voiceSummary.textContent = "Выбрать голос";
+          els.voiceSummary.title = "В браузере нет доступных английских голосов";
           return;
         }
-        const isBritish = /^en[-_]GB/i.test(voice.lang);
-        const languageCode = voice.lang.toUpperCase().replace("_", "-");
-        const language = isBritish
-          ? "English UK"
-          : languageCode.startsWith("EN-")
-            ? `English ${languageCode.slice(3, 5)}`
-            : languageCode;
         const shortName = voice.name.replace(/\s*-\s*English(?:\s*\([^)]*\))?$/i, "").trim();
-        const natural = /(natural|neural|enhanced|google\s+uk\s+english\s+female)/i.test(voice.name);
-        els.voiceName.textContent = shortName || voice.name;
-        els.voiceMeta.textContent = `${language} · ${natural ? "более живое звучание" : "чёткое произношение"}`;
-        els.voiceStatus.textContent = natural ? "Живой" : "Готов";
+        els.voiceSummary.textContent = `Голос: ${shortName || voice.name}`;
+        els.voiceSummary.title = `${shortName || voice.name} · ${voice.lang.toUpperCase()}`;
       }
 
       function loadVoices() {
@@ -3334,14 +3321,27 @@
         state.voices = voices;
         const savedVoice = localStorage.getItem("fedya-voice-v1") || "";
         const current = els.voiceSelect.value || savedVoice;
-        els.voiceSelect.innerHTML = `<option value="">Автоматически</option>` + voices
-          .map((voice) => `<option value="${voice.voiceURI}">${voice.name} (${voice.lang})</option>`)
+        els.voiceSelect.innerHTML = `<option value="">Автоматически (рекомендуется)</option>` + voices
+          .map((voice) => {
+            const shortName = voice.name.replace(/\s*[-–—]\s*English(?:\s*\([^)]*\))?$/i, "").trim() || voice.name;
+            return `<option value="${voice.voiceURI}">${shortName} (${voice.lang})</option>`;
+          })
           .join("");
-        if (voices.some((voice) => voice.voiceURI === current)) els.voiceSelect.value = current;
+        if (voices.some((voice) => voice.voiceURI === current)) {
+          els.voiceSelect.value = current;
+        } else {
+          const recommended = selectedVoice();
+          if (recommended) els.voiceSelect.value = recommended.voiceURI;
+        }
         updateVoiceCard();
       }
 
       function selectedVoice() {
+        const requestedVoice = els.voiceSelect && els.voiceSelect.value;
+        if (requestedVoice) {
+          const chosen = state.voices.find((voice) => voice.voiceURI === requestedVoice);
+          if (chosen) return chosen;
+        }
         const british = state.voices.filter((voice) => /^en[-_]GB/i.test(voice.lang));
         const preferredNames = [
           /Google UK English Female/i,
@@ -3675,8 +3675,10 @@
       } else {
         els.playAll.disabled = true;
         els.voiceSelect.disabled = true;
-        els.voiceStatus.textContent = "Нет";
-        els.voiceMeta.textContent = "Озвучивание недоступно в этом браузере";
+        if (els.voiceSummary) {
+          els.voiceSummary.textContent = "Голос недоступен";
+          els.voiceSummary.title = "Озвучивание недоступно в этом браузере";
+        }
         showNotice("Для озвучивания откройте страницу в Chrome, Edge или Safari.");
       }
 
