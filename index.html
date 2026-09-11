@@ -655,22 +655,87 @@
       }
 
       .coach-head {
+        position: relative;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 18px 20px;
-        background: var(--navy);
+        gap: 14px;
+        overflow: hidden;
+        padding: 16px 20px 18px;
+        background:
+          radial-gradient(circle at 93% 8%, rgba(255, 211, 90, 0.2), transparent 8rem),
+          linear-gradient(118deg, var(--navy), var(--navy-2));
         color: #fff;
       }
 
+      .coach-head::after {
+        position: absolute;
+        right: -34px;
+        bottom: -54px;
+        width: 112px;
+        height: 112px;
+        border: 18px solid rgba(49, 182, 200, 0.18);
+        border-radius: 50%;
+        content: "";
+        pointer-events: none;
+      }
+
+      .coach-head-main,
+      .coach-head-side {
+        position: relative;
+        z-index: 1;
+      }
+
+      .coach-head-main {
+        display: grid;
+        gap: 1px;
+      }
+
+      .coach-kicker {
+        color: #bfe6ee;
+        font-size: 0.67rem;
+        font-weight: 850;
+        letter-spacing: 0.09em;
+        text-transform: uppercase;
+      }
+
       .coach-head strong {
-        font-size: 0.95rem;
+        font-size: 1.05rem;
+        letter-spacing: -0.01em;
+      }
+
+      .coach-head-side {
+        display: flex;
+        align-items: center;
+        gap: 12px;
       }
 
       .coach-step {
         color: #cfeaf3;
         font-size: 0.86rem;
         font-weight: 750;
+        white-space: nowrap;
+      }
+
+      .coach-progress {
+        position: absolute;
+        right: 20px;
+        bottom: 7px;
+        left: 20px;
+        z-index: 1;
+        height: 4px;
+        overflow: hidden;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.16);
+      }
+
+      .coach-progress span {
+        display: block;
+        width: 14.28%;
+        height: 100%;
+        border-radius: inherit;
+        background: linear-gradient(90deg, var(--yellow), #ffeeb0);
+        transition: width 260ms ease;
       }
 
       .sound-wave {
@@ -710,10 +775,52 @@
         padding: 22px;
       }
 
+      .coach-focus {
+        position: relative;
+        overflow: hidden;
+        border: 1px solid #c9e8ef;
+        border-radius: 17px;
+        background: linear-gradient(135deg, #f8feff 0%, var(--cyan-soft) 100%);
+        padding: 15px 17px 16px;
+      }
+
+      .coach-focus::after {
+        position: absolute;
+        top: -20px;
+        right: 9px;
+        color: rgba(23, 122, 165, 0.12);
+        content: "“";
+        font-family: Georgia, serif;
+        font-size: 5rem;
+        font-weight: 900;
+        line-height: 1;
+        pointer-events: none;
+      }
+
+      .coach-focus-label {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        color: var(--blue);
+        font-size: 0.74rem;
+        font-weight: 900;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+
+      .coach-focus-label span {
+        color: #d69d00;
+        font-size: 0.9rem;
+      }
+
       .coach-sentence {
+        position: relative;
+        z-index: 1;
         margin: 0;
         color: var(--navy);
-        font-size: clamp(1.55rem, 3vw, 2.25rem);
+        font-size: clamp(1.55rem, 3vw, 2.15rem);
         line-height: 1.2;
         letter-spacing: -0.035em;
       }
@@ -1619,7 +1726,9 @@
       }
 
       .coach-head {
-        background: linear-gradient(115deg, var(--navy), var(--navy-2));
+        background:
+          radial-gradient(circle at 93% 8%, rgba(255, 211, 90, 0.2), transparent 8rem),
+          linear-gradient(118deg, var(--navy), var(--navy-2));
       }
 
       .coach-body {
@@ -2554,18 +2663,57 @@
       @media (max-width: 720px) {
         /* Выбранная фраза остаётся перед глазами, пока список прокручивается. */
         .coach {
-          max-height: 252px;
+          max-height: 300px;
           overflow: hidden;
         }
 
         .coach-head {
-          min-height: 44px;
-          padding-block: 10px;
+          min-height: 58px;
+          padding: 10px 14px 14px;
+        }
+
+        .coach-head-main {
+          gap: 0;
+        }
+
+        .coach-kicker {
+          font-size: 0.58rem;
+        }
+
+        .coach-head strong {
+          font-size: 0.98rem;
+        }
+
+        .coach-head-side {
+          gap: 7px;
+        }
+
+        .coach-step {
+          font-size: 0.78rem;
+        }
+
+        .coach-progress {
+          right: 14px;
+          bottom: 6px;
+          left: 14px;
         }
 
         .coach .coach-body {
           overflow: hidden;
           padding: 11px 14px 12px;
+        }
+
+        .coach .coach-focus {
+          border-radius: 14px;
+          padding: 9px 11px 10px;
+        }
+
+        .coach .coach-focus-label {
+          font-size: 0.66rem;
+        }
+
+        .coach .coach-focus-label span {
+          font-size: 0.8rem;
         }
 
         .coach .coach-sentence {
@@ -2728,12 +2876,21 @@
 
             <aside class="panel coach" id="coach" aria-label="Тренажёр выбранной фразы">
               <div class="coach-head">
-                <strong>Учим сейчас</strong>
-                <div class="sound-wave" id="coachWave" aria-hidden="true"><span></span><span></span><span></span></div>
-                <span class="coach-step" id="coachStep">1 из 7</span>
+                <div class="coach-head-main">
+                  <span class="coach-kicker">Тренировка фразы</span>
+                  <strong>Учим сейчас</strong>
+                </div>
+                <div class="coach-head-side">
+                  <div class="sound-wave" id="coachWave" aria-hidden="true"><span></span><span></span><span></span></div>
+                  <span class="coach-step" id="coachStep">1 из 7</span>
+                </div>
+                <div class="coach-progress" aria-hidden="true"><span id="coachProgressFill"></span></div>
               </div>
               <div class="coach-body">
-                <h2 class="coach-sentence" id="coachSentence"></h2>
+                <div class="coach-focus">
+                  <div class="coach-focus-label"><span aria-hidden="true">✦</span> Повтори вслух</div>
+                  <h2 class="coach-sentence" id="coachSentence"></h2>
+                </div>
                 <p class="coach-chunks" id="coachChunks"></p>
                 <div class="coach-audio">
                   <button class="button button-primary" id="coachListen" type="button">▶ Слушать</button>
@@ -2935,6 +3092,7 @@
         coach: document.getElementById("coach"),
         coachWave: document.getElementById("coachWave"),
         coachStep: document.getElementById("coachStep"),
+        coachProgressFill: document.getElementById("coachProgressFill"),
         coachSentence: document.getElementById("coachSentence"),
         coachChunks: document.getElementById("coachChunks"),
         coachHint: document.getElementById("coachHint"),
@@ -3084,6 +3242,7 @@
         const sentence = sentences[state.selected];
         renderPhrasePicker();
         els.coachStep.textContent = `${state.selected + 1} из ${sentences.length}`;
+        els.coachProgressFill.style.width = `${((state.selected + 1) / sentences.length) * 100}%`;
         els.coachSentence.textContent = sentence.text;
         els.coachChunks.textContent = sentence.chunks;
         els.coachHint.textContent = sentence.hint;
@@ -3144,9 +3303,11 @@
         }
         const isBritish = /^en[-_]GB/i.test(voice.lang);
         const language = isBritish ? "English UK" : voice.lang.replace(/[-_].*$/, "").toUpperCase();
-        els.voiceName.textContent = voice.name;
-        els.voiceMeta.textContent = `${language} · один голос для всех фраз`;
-        els.voiceStatus.textContent = "Готов";
+        const shortName = voice.name.replace(/\s*-\s*English(?:\s*\([^)]*\))?$/i, "").trim();
+        const natural = /(natural|neural|enhanced)/i.test(voice.name);
+        els.voiceName.textContent = shortName || voice.name;
+        els.voiceMeta.textContent = `${language} · ${natural ? "более живое звучание" : "чёткое произношение"}`;
+        els.voiceStatus.textContent = natural ? "Живой" : "Готов";
       }
 
       function loadVoices() {
@@ -3165,6 +3326,11 @@
       function selectedVoice() {
         const british = state.voices.filter((voice) => /^en[-_]GB/i.test(voice.lang));
         const preferredNames = [
+          /Microsoft.*Sonia.*Natural/i,
+          /Microsoft.*Libby.*Natural/i,
+          /Microsoft.*Ryan.*Natural/i,
+          /Microsoft.*Jenny.*Natural/i,
+          /Microsoft.*(Natural|Neural|Enhanced|Online)/i,
           /Google UK English Female/i,
           /Microsoft.*Sonia/i,
           /Microsoft.*Libby/i,
