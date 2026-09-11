@@ -63,6 +63,23 @@
         font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
         font-size: 16px;
         line-height: 1.5;
+        scrollbar-color: #a8d4df transparent;
+        scrollbar-width: thin;
+      }
+
+      body::-webkit-scrollbar {
+        width: 10px;
+      }
+
+      body::-webkit-scrollbar-track {
+        background: transparent;
+      }
+
+      body::-webkit-scrollbar-thumb {
+        border: 3px solid transparent;
+        border-radius: 999px;
+        background: #a8d4df;
+        background-clip: padding-box;
       }
 
       button,
@@ -189,6 +206,33 @@
         font-size: 0.95rem;
       }
 
+      .brand-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 7px;
+        margin-top: 11px;
+      }
+
+      .brand-pill {
+        display: inline-flex;
+        min-height: 27px;
+        align-items: center;
+        border: 1px solid rgba(255, 255, 255, 0.24);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.1);
+        color: #e8f5f8;
+        padding: 3px 9px;
+        font-size: 0.75rem;
+        font-weight: 800;
+        white-space: nowrap;
+      }
+
+      .brand-progress-pill {
+        background: rgba(255, 211, 90, 0.17);
+        border-color: rgba(255, 211, 90, 0.36);
+        color: #fff4c6;
+      }
+
       .header-actions {
         position: relative;
         z-index: 1;
@@ -217,6 +261,67 @@
 
       .voice-field option {
         color: var(--ink);
+      }
+
+      .voice-card {
+        display: grid;
+        min-width: min(300px, 32vw);
+        grid-template-columns: auto minmax(0, 1fr) auto;
+        align-items: center;
+        gap: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.28);
+        border-radius: 14px;
+        background: rgba(255, 255, 255, 0.1);
+        color: #fff;
+        padding: 9px 11px;
+      }
+
+      .voice-card-icon {
+        display: grid;
+        width: 34px;
+        height: 34px;
+        place-items: center;
+        border-radius: 11px;
+        background: rgba(255, 211, 90, 0.2);
+        font-size: 1.05rem;
+      }
+
+      .voice-card-copy {
+        display: grid;
+        min-width: 0;
+        gap: 1px;
+      }
+
+      .voice-card-label {
+        color: #cfeaf3;
+        font-size: 0.68rem;
+        font-weight: 800;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+      }
+
+      .voice-card-copy strong {
+        overflow-wrap: anywhere;
+        color: #fff;
+        font-size: 0.88rem;
+        line-height: 1.2;
+      }
+
+      .voice-card-meta {
+        overflow-wrap: anywhere;
+        color: #d9eef5;
+        font-size: 0.72rem;
+        line-height: 1.25;
+      }
+
+      .voice-card-status {
+        border-radius: 999px;
+        background: rgba(49, 182, 200, 0.2);
+        color: #d9f7fa;
+        padding: 4px 7px;
+        font-size: 0.68rem;
+        font-weight: 900;
+        white-space: nowrap;
       }
 
       .button {
@@ -408,7 +513,27 @@
         border: 1px solid var(--line);
         border-radius: 17px;
         background: #fff;
+        scroll-margin-block: 18px;
         transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+      }
+
+      .sentence-card.just-selected {
+        animation: sentenceFocus 520ms ease both;
+      }
+
+      @keyframes sentenceFocus {
+        0% {
+          transform: translateY(0);
+          box-shadow: 0 0 0 0 rgba(49, 182, 200, 0);
+        }
+        42% {
+          transform: translateY(-2px);
+          box-shadow: 0 0 0 5px rgba(49, 182, 200, 0.18), 0 12px 28px rgba(49, 182, 200, 0.1);
+        }
+        100% {
+          transform: translateY(0);
+          box-shadow: 0 0 0 3px rgba(49, 182, 200, 0.12);
+        }
       }
 
       .sentence-card:hover {
@@ -843,6 +968,17 @@
         font-weight: 800;
       }
 
+      .quiz-status-copy {
+        display: grid;
+        gap: 1px;
+        text-align: right;
+      }
+
+      .quiz-progress {
+        color: var(--navy);
+        font-size: 0.82rem;
+      }
+
       .quiz-label {
         display: inline-flex;
         border-radius: 999px;
@@ -917,6 +1053,49 @@
         display: flex;
         justify-content: center;
         margin-top: 16px;
+      }
+
+      .quiz-final {
+        display: grid;
+        justify-items: center;
+        gap: 12px;
+        padding: 20px 0 4px;
+        text-align: center;
+      }
+
+      .quiz-final-icon {
+        display: grid;
+        width: 66px;
+        height: 66px;
+        place-items: center;
+        border: 5px solid #bfe6d3;
+        border-radius: 50%;
+        background: var(--green-soft);
+        color: var(--green);
+        font-size: 2rem;
+        font-weight: 900;
+      }
+
+      .quiz-final h2 {
+        margin: 0;
+        color: var(--navy);
+        font-size: clamp(1.75rem, 5vw, 2.6rem);
+        letter-spacing: -0.04em;
+      }
+
+      .quiz-final-score {
+        border-radius: 14px;
+        background: var(--yellow-soft);
+        color: #765900;
+        padding: 9px 15px;
+        font-size: 1.15rem;
+        font-weight: 900;
+      }
+
+      .quiz-final-message {
+        max-width: 38ch;
+        margin: 0;
+        color: var(--muted);
       }
 
       .notice {
@@ -1900,6 +2079,24 @@
           padding: 20px 14px;
         }
 
+        .quiz-status-copy {
+          font-size: 0.82rem;
+        }
+
+        .quiz-progress {
+          font-size: 0.74rem;
+        }
+
+        .quiz-final {
+          padding-top: 12px;
+        }
+
+        .quiz-final-icon {
+          width: 58px;
+          height: 58px;
+          font-size: 1.75rem;
+        }
+
         .quiz-listen .button {
           width: 100%;
           min-height: 54px;
@@ -2012,6 +2209,11 @@
         white-space: nowrap;
       }
 
+      .voice-card {
+        position: relative;
+        z-index: 1;
+      }
+
       .phrase-picker {
         display: grid;
         gap: 10px;
@@ -2093,6 +2295,56 @@
           background: transparent;
           padding: 0;
           font-size: 0.76rem;
+        }
+
+        .voice-card {
+          grid-column: 1 / -1;
+          grid-row: 2;
+          width: 100%;
+          min-width: 0;
+          grid-template-columns: auto minmax(0, 1fr) auto;
+          gap: 8px;
+          border-radius: 13px;
+          padding: 8px 9px;
+        }
+
+        .voice-card-icon {
+          width: 32px;
+          height: 32px;
+          border-radius: 10px;
+          font-size: 0.98rem;
+        }
+
+        .voice-card-label {
+          font-size: 0.63rem;
+        }
+
+        .voice-card-copy strong {
+          font-size: 0.82rem;
+        }
+
+        .voice-card-meta {
+          font-size: 0.68rem;
+        }
+
+        .voice-card-status {
+          padding: 4px 6px;
+          font-size: 0.63rem;
+        }
+
+        .brand-meta {
+          gap: 5px;
+          margin-top: 8px;
+        }
+
+        .brand-pill {
+          min-height: 24px;
+          padding: 2px 7px;
+          font-size: 0.68rem;
+        }
+
+        .sentence-card {
+          scroll-margin-top: calc(148px + env(safe-area-inset-top));
         }
 
         .main-nav {
@@ -2255,6 +2507,34 @@
           font-size: 0.72rem;
         }
 
+        .voice-card {
+          gap: 6px;
+          padding-inline: 7px;
+        }
+
+        .voice-card-icon {
+          width: 29px;
+          height: 29px;
+          border-radius: 9px;
+          font-size: 0.9rem;
+        }
+
+        .voice-card-label {
+          font-size: 0.58rem;
+        }
+
+        .voice-card-copy strong {
+          font-size: 0.76rem;
+        }
+
+        .voice-card-meta {
+          font-size: 0.62rem;
+        }
+
+        .voice-card-status {
+          font-size: 0.58rem;
+        }
+
         .tab {
           gap: 3px;
           padding-inline: 2px;
@@ -2370,6 +2650,11 @@
           <div>
             <h1>My friend Fedya</h1>
             <p>Подготовка выступления перед классом</p>
+            <div class="brand-meta" aria-label="План тренировки">
+              <span class="brand-pill">7 фраз</span>
+              <span class="brand-pill">слушай → повторяй</span>
+              <span class="brand-pill brand-progress-pill" id="headerProgress">0 из 7 выучено</span>
+            </div>
           </div>
         </div>
         <div class="header-actions">
@@ -2382,7 +2667,15 @@
               </select>
             </label>
           </details>
-          <span class="voice-badge" aria-label="Выбран один английский голос English UK">🔊 English UK</span>
+          <div class="voice-card" id="voiceCard" aria-live="polite" aria-label="Выбранный английский голос">
+            <span class="voice-card-icon" aria-hidden="true">🔊</span>
+            <span class="voice-card-copy">
+              <span class="voice-card-label">Английский голос</span>
+              <strong id="voiceName">English UK</strong>
+              <span class="voice-card-meta" id="voiceMeta">Один спокойный голос для всех фраз</span>
+            </span>
+            <span class="voice-card-status" id="voiceStatus">Авто</span>
+          </div>
           <button class="button button-primary" id="playAll" type="button">▶ Слушать всё</button>
           <button class="button button-ghost-light" id="stopSpeech" type="button">■ Стоп</button>
         </div>
@@ -2525,17 +2818,29 @@
             <div class="quiz-card">
               <div class="quiz-status">
                 <span class="quiz-label">Мини-тест</span>
-                <span id="quizScore">Верно: 0 из 0</span>
+                <span class="quiz-status-copy">
+                  <span class="quiz-progress" id="quizProgress">Вопрос 1 из 7</span>
+                  <span id="quizScore">Верно: 0 из 0</span>
+                </span>
               </div>
-              <h2 class="quiz-question" id="quizQuestion"></h2>
-              <p class="quiz-prompt">Что означает эта фраза?</p>
-              <div class="quiz-listen">
-                <button class="button button-secondary" id="quizListen" type="button">▶ Послушать</button>
+              <div id="quizActive">
+                <h2 class="quiz-question" id="quizQuestion"></h2>
+                <p class="quiz-prompt">Что означает эта фраза?</p>
+                <div class="quiz-listen">
+                  <button class="button button-secondary" id="quizListen" type="button">▶ Послушать</button>
+                </div>
+                <div class="quiz-options" id="quizOptions"></div>
+                <p class="quiz-feedback" id="quizFeedback" aria-live="polite"></p>
+                <div class="quiz-next">
+                  <button class="button button-primary" id="quizNext" type="button" hidden>Следующая фраза</button>
+                </div>
               </div>
-              <div class="quiz-options" id="quizOptions"></div>
-              <p class="quiz-feedback" id="quizFeedback" aria-live="polite"></p>
-              <div class="quiz-next">
-                <button class="button button-primary" id="quizNext" type="button" hidden>Следующая фраза</button>
+              <div class="quiz-final" id="quizFinal" hidden>
+                <div class="quiz-final-icon" aria-hidden="true">✓</div>
+                <h2>Тест завершён!</h2>
+                <div class="quiz-final-score" id="quizFinalScore">0 из 7</div>
+                <p class="quiz-final-message" id="quizFinalMessage"></p>
+                <button class="button button-primary" id="quizRestart" type="button">Пройти ещё раз</button>
               </div>
             </div>
           </div>
@@ -2621,6 +2926,10 @@
         showHints: document.getElementById("showHints"),
         showTranslations: document.getElementById("showTranslations"),
         voiceSelect: document.getElementById("voiceSelect"),
+        voiceName: document.getElementById("voiceName"),
+        voiceMeta: document.getElementById("voiceMeta"),
+        voiceStatus: document.getElementById("voiceStatus"),
+        headerProgress: document.getElementById("headerProgress"),
         progressFill: document.getElementById("progressFill"),
         progressText: document.getElementById("progressText"),
         coach: document.getElementById("coach"),
@@ -2659,7 +2968,13 @@
         quizOptions: document.getElementById("quizOptions"),
         quizFeedback: document.getElementById("quizFeedback"),
         quizScore: document.getElementById("quizScore"),
+        quizProgress: document.getElementById("quizProgress"),
         quizNext: document.getElementById("quizNext"),
+        quizActive: document.getElementById("quizActive"),
+        quizFinal: document.getElementById("quizFinal"),
+        quizFinalScore: document.getElementById("quizFinalScore"),
+        quizFinalMessage: document.getElementById("quizFinalMessage"),
+        quizRestart: document.getElementById("quizRestart"),
         notice: document.getElementById("notice"),
         speechStatus: document.getElementById("speechStatus")
       };
@@ -2675,6 +2990,9 @@
         quizIndex: 0,
         quizScore: 0,
         quizAnswered: 0,
+        quizRound: [],
+        quizPosition: 0,
+        quizFinished: false,
         noticeTimer: null,
         stageTouchStartX: null,
         stageTouchStartY: null
@@ -2786,6 +3104,13 @@
         state.selected = next;
         renderSentenceList();
         renderCoach();
+        const selectedCard = els.sentenceList.querySelector(`[data-card="${next}"]`);
+        if (selectedCard) {
+          selectedCard.classList.remove("just-selected");
+          void selectedCard.offsetWidth;
+          selectedCard.classList.add("just-selected");
+          window.setTimeout(() => selectedCard.classList.remove("just-selected"), 560);
+        }
         if (revealCoach && window.matchMedia("(max-width: 920px)").matches) {
           const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
           window.setTimeout(() => els.coach.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" }), 30);
@@ -2797,6 +3122,7 @@
         const percent = Math.round((count / sentences.length) * 100);
         els.progressFill.style.width = `${percent}%`;
         els.progressText.textContent = `${count} из ${sentences.length}`;
+        els.headerProgress.textContent = `${count} из ${sentences.length} выучено`;
       }
 
       function toggleLearned(index, learned) {
@@ -2806,6 +3132,21 @@
         renderSentenceList();
         renderCoach();
         if (state.learned.size === sentences.length) showNotice("Отлично! Все фразы отмечены как выученные.");
+      }
+
+      function updateVoiceCard(voice = selectedVoice()) {
+        if (!els.voiceName || !els.voiceMeta || !els.voiceStatus) return;
+        if (!voice) {
+          els.voiceName.textContent = "English UK";
+          els.voiceMeta.textContent = "Браузер подберёт один английский голос";
+          els.voiceStatus.textContent = "Авто";
+          return;
+        }
+        const isBritish = /^en[-_]GB/i.test(voice.lang);
+        const language = isBritish ? "English UK" : voice.lang.replace(/[-_].*$/, "").toUpperCase();
+        els.voiceName.textContent = voice.name;
+        els.voiceMeta.textContent = `${language} · один голос для всех фраз`;
+        els.voiceStatus.textContent = "Готов";
       }
 
       function loadVoices() {
@@ -2818,6 +3159,7 @@
           .map((voice) => `<option value="${voice.voiceURI}">${voice.name} (${voice.lang})</option>`)
           .join("");
         if (voices.some((voice) => voice.voiceURI === current)) els.voiceSelect.value = current;
+        updateVoiceCard();
       }
 
       function selectedVoice() {
@@ -2945,19 +3287,54 @@
         return array;
       }
 
-      function nextQuizIndex() {
-        if (sentences.length < 2) return 0;
-        let next = state.quizIndex;
-        while (next === state.quizIndex) next = Math.floor(Math.random() * sentences.length);
-        return next;
+      function resetQuiz() {
+        state.quizRound = shuffle(sentences.map((_sentence, index) => index));
+        state.quizPosition = 0;
+        state.quizIndex = state.quizRound[0] || 0;
+        state.quizScore = 0;
+        state.quizAnswered = 0;
+        state.quizFinished = false;
+      }
+
+      function renderQuizFinal() {
+        const total = sentences.length;
+        const score = state.quizScore;
+        const percent = Math.round((score / total) * 100);
+        els.quizActive.hidden = true;
+        els.quizFinal.hidden = false;
+        els.quizProgress.textContent = "Готово";
+        els.quizScore.textContent = `Результат: ${score} из ${total}`;
+        els.quizFinalScore.textContent = `${score} из ${total} · ${percent}%`;
+        els.quizFinalMessage.textContent = score === total
+          ? "Идеально! Ты готов рассказать про Федю перед классом."
+          : score >= Math.ceil(total * 0.7)
+            ? "Очень хорошо! Ещё раз послушай трудные фразы — и будешь готов."
+            : "Хорошая попытка! Повтори фразы в разделе «Учить» и попробуй снова.";
       }
 
       function renderQuiz(newQuestion = false) {
-        if (newQuestion) state.quizIndex = nextQuizIndex();
+        if (!state.quizRound.length) resetQuiz();
+        if (newQuestion) {
+          state.quizPosition += 1;
+          if (state.quizPosition >= sentences.length) {
+            state.quizFinished = true;
+            renderQuizFinal();
+            return;
+          }
+          state.quizIndex = state.quizRound[state.quizPosition];
+        }
+        if (state.quizFinished) {
+          renderQuizFinal();
+          return;
+        }
         const sentence = sentences[state.quizIndex];
+        els.quizActive.hidden = false;
+        els.quizFinal.hidden = true;
         els.quizQuestion.textContent = sentence.text;
         els.quizFeedback.textContent = "";
         els.quizNext.hidden = true;
+        els.quizNext.textContent = state.quizPosition === sentences.length - 1 ? "Завершить тест" : "Следующая фраза";
+        els.quizProgress.textContent = `Вопрос ${state.quizPosition + 1} из ${sentences.length}`;
         const distractors = shuffle(sentences.filter((_item, index) => index !== state.quizIndex)).slice(0, 2);
         const options = shuffle([sentence, ...distractors]);
         els.quizOptions.innerHTML = options.map((option) =>
@@ -2967,7 +3344,7 @@
       }
 
       function answerQuiz(button) {
-        if (button.disabled) return;
+        if (button.disabled || state.quizFinished) return;
         const correct = button.dataset.correct === "true";
         state.quizAnswered += 1;
         if (correct) state.quizScore += 1;
@@ -3012,6 +3389,7 @@
       els.showTranslations.addEventListener("change", () => document.body.classList.toggle("hide-translations", !els.showTranslations.checked));
       els.voiceSelect.addEventListener("change", () => {
         localStorage.setItem("fedya-voice-v1", els.voiceSelect.value);
+        updateVoiceCard();
         showNotice("Голос выбран. Нажмите «Слушать», чтобы проверить его.");
       });
 
@@ -3094,6 +3472,10 @@
         if (option) answerQuiz(option);
       });
       els.quizNext.addEventListener("click", () => renderQuiz(true));
+      els.quizRestart.addEventListener("click", () => {
+        resetQuiz();
+        renderQuiz();
+      });
 
       if ("speechSynthesis" in window) {
         loadVoices();
@@ -3102,6 +3484,8 @@
       } else {
         els.playAll.disabled = true;
         els.voiceSelect.disabled = true;
+        els.voiceStatus.textContent = "Нет";
+        els.voiceMeta.textContent = "Озвучивание недоступно в этом браузере";
         showNotice("Для озвучивания откройте страницу в Chrome, Edge или Safari.");
       }
 
