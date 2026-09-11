@@ -8,6 +8,10 @@
       content="Интерактивная тренировка английского выступления о друге Феде для ученика 3 класса"
     />
     <meta name="theme-color" content="#12314b" />
+    <meta name="application-name" content="Fedya Trainer" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="format-detection" content="telephone=no" />
     <title>My friend Fedya — тренировка выступления</title>
     <link
       rel="icon"
@@ -1332,8 +1336,6 @@
           transform: none;
         }
       }
-      }
-
       @media (prefers-reduced-motion: reduce) {
         *,
         *::before,
@@ -1342,6 +1344,652 @@
           animation-duration: 0.01ms !important;
           animation-iteration-count: 1 !important;
           transition-duration: 0.01ms !important;
+        }
+      }
+
+      /* Карманный режим: понятный интерфейс и большие зоны нажатия */
+      body {
+        min-height: 100svh;
+        overscroll-behavior-y: contain;
+      }
+
+      .button:disabled,
+      .sound-button:disabled {
+        cursor: not-allowed;
+        opacity: 0.46;
+        transform: none;
+      }
+
+      .voice-details {
+        position: relative;
+      }
+
+      .voice-details summary {
+        display: none;
+      }
+
+      .tab {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+      }
+
+      .tab-icon {
+        color: var(--cyan);
+        font-size: 0.8rem;
+        line-height: 1;
+      }
+
+      .tab[aria-selected="true"] .tab-icon {
+        color: var(--yellow);
+      }
+
+      .main-nav {
+        justify-content: center;
+      }
+
+      .learn-toolbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 18px;
+        margin-bottom: 16px;
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.9);
+        padding: 12px 14px;
+        box-shadow: 0 10px 28px rgba(23, 48, 69, 0.06);
+      }
+
+      .learn-tip {
+        display: flex;
+        min-width: 0;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .learn-tip strong {
+        display: block;
+        color: var(--navy);
+        font-size: 0.95rem;
+      }
+
+      .learn-tip p {
+        margin: 2px 0 0;
+        color: var(--muted);
+        font-size: 0.83rem;
+      }
+
+      .tip-badge {
+        flex: 0 0 auto;
+        border-radius: 999px;
+        background: var(--yellow);
+        color: var(--navy);
+        padding: 7px 10px;
+        font-size: 0.78rem;
+        font-weight: 900;
+      }
+
+      .learn-toolbar .display-toggles {
+        flex: 0 0 auto;
+      }
+
+      .coach {
+        border-color: #bddce7;
+      }
+
+      .coach-head {
+        background: linear-gradient(115deg, var(--navy), var(--navy-2));
+      }
+
+      .coach-body {
+        background: linear-gradient(180deg, #fff 0%, #fbfdff 100%);
+      }
+
+      .coach-chunks {
+        display: inline-block;
+        border-radius: 10px;
+        background: var(--cyan-soft);
+        padding: 7px 10px;
+      }
+
+      .coach-learned {
+        display: flex;
+        width: 100%;
+        min-height: 50px;
+        align-items: center;
+        justify-content: center;
+        gap: 9px;
+        margin: 0 0 8px;
+        border: 1px solid #9bceb8;
+        border-radius: 13px;
+        background: #fff;
+        color: #126746;
+        font-weight: 850;
+      }
+
+      .coach-check {
+        display: grid;
+        width: 24px;
+        height: 24px;
+        place-items: center;
+        border: 2px solid #72b99b;
+        border-radius: 50%;
+        color: transparent;
+        font-size: 0.78rem;
+      }
+
+      .coach-learned[aria-pressed="true"] {
+        border-color: var(--green);
+        background: var(--green-soft);
+        color: #0f6748;
+      }
+
+      .coach-learned[aria-pressed="true"] .coach-check {
+        border-color: var(--green);
+        background: var(--green);
+        color: #fff;
+      }
+
+      .coach-ipa-row p {
+        color: var(--navy);
+        font-family: "Segoe UI", Arial, sans-serif;
+        letter-spacing: 0.015em;
+      }
+
+      .hide-hints .coach-ipa-row {
+        display: none;
+      }
+
+      .sentence-card.is-learned .sentence-number {
+        background: var(--green);
+        color: #fff;
+      }
+
+      .sound-button {
+        white-space: nowrap;
+      }
+
+      .mobile-help {
+        display: none;
+      }
+
+      .stage {
+        touch-action: pan-y;
+      }
+
+      @media (min-width: 721px) {
+        .voice-details > .voice-field {
+          display: grid !important;
+        }
+      }
+
+      @media (max-width: 720px) {
+        :root {
+          --mobile-nav-height: 76px;
+        }
+
+        html {
+          scroll-padding-bottom: calc(var(--mobile-nav-height) + env(safe-area-inset-bottom));
+        }
+
+        .app-shell {
+          padding:
+            max(8px, env(safe-area-inset-top))
+            max(9px, env(safe-area-inset-right))
+            calc(var(--mobile-nav-height) + 22px + env(safe-area-inset-bottom))
+            max(9px, env(safe-area-inset-left));
+        }
+
+        .topbar {
+          gap: 14px;
+          padding: 17px;
+          border-radius: 20px;
+          box-shadow: 0 14px 32px rgba(18, 49, 75, 0.2);
+        }
+
+        .topbar::before {
+          width: 130px;
+          height: 130px;
+          right: -55px;
+          top: -72px;
+        }
+
+        .topbar::after {
+          right: 76px;
+        }
+
+        .brand {
+          align-items: center;
+        }
+
+        .brand-mark {
+          width: 48px;
+          height: 48px;
+          border-radius: 15px;
+          font-size: 1.6rem;
+        }
+
+        .brand h1 {
+          font-size: clamp(1.45rem, 6.8vw, 1.9rem);
+        }
+
+        .brand p {
+          font-size: 0.84rem;
+        }
+
+        .header-actions {
+          display: grid;
+          grid-template-columns: minmax(0, 1fr) auto;
+          gap: 8px;
+        }
+
+        .header-actions #playAll {
+          grid-column: 1;
+          grid-row: 1;
+          min-width: 0;
+          min-height: 52px;
+        }
+
+        .header-actions #stopSpeech {
+          grid-column: 2;
+          grid-row: 1;
+          min-width: 86px;
+          min-height: 52px;
+        }
+
+        .voice-details {
+          grid-column: 1 / -1;
+          grid-row: 2;
+        }
+
+        .voice-details summary {
+          display: flex;
+          min-height: 46px;
+          list-style: none;
+          align-items: center;
+          justify-content: center;
+          border: 1px solid rgba(255, 255, 255, 0.28);
+          border-radius: 12px;
+          background: rgba(255, 255, 255, 0.08);
+          color: #e9f6fa;
+          font-size: 0.86rem;
+          font-weight: 800;
+          cursor: pointer;
+        }
+
+        .voice-details summary::-webkit-details-marker {
+          display: none;
+        }
+
+        .voice-details summary::before {
+          content: "⚙";
+          margin-right: 7px;
+        }
+
+        .voice-details summary::after {
+          content: "+";
+          margin-left: 8px;
+          font-size: 1.15rem;
+        }
+
+        .voice-details[open] summary::after {
+          content: "−";
+        }
+
+        .voice-details:not([open]) > .voice-field {
+          display: none;
+        }
+
+        .voice-details[open] > .voice-field {
+          display: grid;
+        }
+
+        .voice-field {
+          margin-top: 8px;
+          border: 1px solid rgba(255, 255, 255, 0.22);
+          border-radius: 12px;
+          background: rgba(255, 255, 255, 0.08);
+          padding: 10px;
+        }
+
+        .voice-field select {
+          width: 100%;
+          min-height: 48px;
+          font-size: 1rem;
+        }
+
+        .main-nav {
+          position: fixed;
+          top: auto;
+          right: 0;
+          bottom: 0;
+          left: 0;
+          z-index: 45;
+          width: 100%;
+          margin: 0;
+          padding: 7px max(8px, env(safe-area-inset-right)) max(7px, env(safe-area-inset-bottom)) max(8px, env(safe-area-inset-left));
+          border: 0;
+          border-top: 1px solid rgba(18, 49, 75, 0.12);
+          border-radius: 20px 20px 0 0;
+          background: rgba(255, 255, 255, 0.97);
+          box-shadow: 0 -12px 32px rgba(18, 49, 75, 0.14);
+          backdrop-filter: blur(16px);
+        }
+
+        .tabs {
+          display: grid;
+          width: 100%;
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+          gap: 5px;
+        }
+
+        .tab {
+          min-height: 58px;
+          flex-direction: column;
+          gap: 4px;
+          border-radius: 13px;
+          padding: 5px 3px;
+          font-size: 0.78rem;
+          line-height: 1.05;
+        }
+
+        .tab-icon {
+          font-size: 1.05rem;
+        }
+
+        .learn-toolbar {
+          display: grid;
+          gap: 10px;
+          margin: 11px 0 12px;
+          border-radius: 16px;
+          padding: 12px;
+        }
+
+        .learn-tip {
+          align-items: flex-start;
+          gap: 9px;
+        }
+
+        .tip-badge {
+          padding: 6px 8px;
+          font-size: 0.7rem;
+        }
+
+        .learn-tip strong {
+          font-size: 0.9rem;
+          line-height: 1.35;
+        }
+
+        .learn-tip p {
+          font-size: 0.78rem;
+        }
+
+        .learn-toolbar .display-toggles {
+          display: grid;
+          width: 100%;
+          grid-template-columns: 1fr 1fr;
+          gap: 7px;
+        }
+
+        .learn-toolbar .switch {
+          min-height: 46px;
+          justify-content: center;
+          border: 1px solid var(--line);
+          background: #f7fafc;
+          padding: 0 7px;
+          font-size: 0.8rem;
+        }
+
+        .learn-grid {
+          gap: 12px;
+        }
+
+        .coach {
+          scroll-margin-top: 10px;
+          border-radius: 20px;
+        }
+
+        .coach-head {
+          padding: 14px 15px;
+        }
+
+        .coach-body {
+          padding: 16px;
+        }
+
+        .coach-sentence {
+          font-size: clamp(1.72rem, 8vw, 2.35rem);
+          line-height: 1.16;
+          overflow-wrap: anywhere;
+        }
+
+        .coach-chunks {
+          margin-top: 10px;
+          font-size: 0.94rem;
+        }
+
+        .coach-audio {
+          grid-template-columns: 1fr 1fr;
+          gap: 8px;
+          margin: 14px 0 10px;
+        }
+
+        .coach-audio #coachListen {
+          grid-column: 1 / -1;
+          min-height: 58px;
+          font-size: 1.05rem;
+        }
+
+        .coach-audio .repeat-button {
+          grid-column: auto;
+        }
+
+        .coach-audio .button,
+        .coach-nav .button {
+          min-height: 50px;
+          padding-inline: 8px;
+          font-size: 0.85rem;
+        }
+
+        .coach-learned {
+          min-height: 52px;
+          margin-bottom: 4px;
+        }
+
+        .info-row {
+          padding: 12px 0;
+        }
+
+        .info-row strong {
+          font-size: 0.72rem;
+        }
+
+        .info-row p {
+          font-size: 0.96rem;
+        }
+
+        .practice-steps {
+          margin-top: 12px;
+        }
+
+        .list-panel {
+          border-radius: 20px;
+          padding: 14px;
+        }
+
+        .panel-heading {
+          gap: 10px;
+          margin-bottom: 12px;
+        }
+
+        .panel-heading h2 {
+          font-size: 1.12rem;
+        }
+
+        .sentence-list {
+          gap: 9px;
+        }
+
+        .sentence-card {
+          border-radius: 16px;
+        }
+
+        .sentence-select {
+          padding-block: 13px;
+        }
+
+        .sentence-actions {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+          gap: 6px;
+          padding: 7px;
+        }
+
+        .sound-button,
+        .learn-check {
+          min-width: 0;
+          min-height: 50px;
+          border-radius: 11px;
+          padding-inline: 4px;
+          font-size: 0.76rem;
+        }
+
+        .learn-check {
+          grid-column: auto;
+          border: 1px solid var(--line);
+          background: #fff;
+        }
+
+        .learn-check input {
+          width: 20px;
+          height: 20px;
+        }
+
+        .view-toolbar {
+          gap: 10px;
+          border-radius: 16px;
+          padding: 12px;
+        }
+
+        .desktop-help {
+          display: none;
+        }
+
+        .mobile-help {
+          display: block;
+        }
+
+        .stage {
+          min-height: clamp(430px, calc(100svh - 218px), 590px);
+          border-radius: 22px;
+          padding: 25px 14px;
+        }
+
+        .stage-sentence {
+          font-size: clamp(2.05rem, 10.5vw, 3.5rem);
+          line-height: 1.1;
+        }
+
+        .stage-actions .button {
+          min-height: 54px;
+        }
+
+        .quiz-card {
+          border-radius: 20px;
+          padding: 20px 14px;
+        }
+
+        .quiz-listen .button {
+          width: 100%;
+          min-height: 54px;
+        }
+
+        .quiz-option {
+          min-height: 62px;
+          font-size: 0.96rem;
+        }
+
+        .notice {
+          right: max(9px, env(safe-area-inset-right));
+          bottom: calc(var(--mobile-nav-height) + 12px + env(safe-area-inset-bottom));
+          left: max(9px, env(safe-area-inset-left));
+          max-width: none;
+          text-align: center;
+        }
+      }
+
+      @media (max-width: 390px) {
+        .topbar {
+          padding: 14px;
+        }
+
+        .brand-mark {
+          width: 44px;
+          height: 44px;
+          border-radius: 13px;
+          font-size: 1.45rem;
+        }
+
+        .brand h1 {
+          font-size: 1.35rem;
+        }
+
+        .brand p {
+          font-size: 0.78rem;
+        }
+
+        .header-actions #playAll,
+        .header-actions #stopSpeech {
+          font-size: 0.86rem;
+          padding-inline: 10px;
+        }
+
+        .learn-tip p {
+          display: none;
+        }
+
+        .learn-toolbar .switch {
+          font-size: 0.74rem;
+        }
+
+        .coach-body,
+        .list-panel {
+          padding: 12px;
+        }
+
+        .coach-audio .button,
+        .coach-nav .button {
+          font-size: 0.79rem;
+        }
+
+        .sound-button,
+        .learn-check {
+          font-size: 0.71rem;
+        }
+
+        .sentence-hint,
+        .sentence-translation {
+          font-size: 0.82rem;
+        }
+      }
+
+      @media (max-width: 900px) and (max-height: 520px) and (orientation: landscape) {
+        .app-shell {
+          padding-bottom: calc(66px + env(safe-area-inset-bottom));
+        }
+
+        .main-nav {
+          padding-block: 4px max(4px, env(safe-area-inset-bottom));
+        }
+
+        .tab {
+          min-height: 48px;
+          flex-direction: row;
+        }
+
+        .stage {
+          min-height: calc(100svh - 88px);
         }
       }
     </style>
@@ -1358,31 +2006,43 @@
           </div>
         </div>
         <div class="header-actions">
-          <label class="voice-field" for="voiceSelect">
-            Английский голос
-            <select id="voiceSelect" aria-label="Выбор английского голоса">
-              <option value="">Автоматически</option>
-            </select>
-          </label>
-          <button class="button button-primary" id="playAll" type="button">Слушать всё</button>
-          <button class="button button-ghost-light" id="stopSpeech" type="button">Стоп</button>
+          <details class="voice-details">
+            <summary>Настроить голос</summary>
+            <label class="voice-field" for="voiceSelect">
+              Английский голос
+              <select id="voiceSelect" aria-label="Выбор английского голоса">
+                <option value="">Автоматически</option>
+              </select>
+            </label>
+          </details>
+          <button class="button button-primary" id="playAll" type="button">▶ Слушать всё</button>
+          <button class="button button-ghost-light" id="stopSpeech" type="button">■ Стоп</button>
         </div>
       </header>
 
       <nav class="main-nav" aria-label="Режимы тренировки">
         <div class="tabs" role="tablist" aria-label="Выберите режим">
-          <button class="tab" id="learnTab" type="button" role="tab" aria-selected="true" aria-controls="learnView" data-view="learn">Учить</button>
-          <button class="tab" id="presentTab" type="button" role="tab" aria-selected="false" aria-controls="presentView" data-view="present">Выступать</button>
-          <button class="tab" id="quizTab" type="button" role="tab" aria-selected="false" aria-controls="quizView" data-view="quiz">Проверить</button>
-        </div>
-        <div class="display-toggles" aria-label="Отображение подсказок">
-          <label class="switch"><input id="showHints" type="checkbox" checked /> Произношение</label>
-          <label class="switch"><input id="showTranslations" type="checkbox" checked /> Перевод</label>
+          <button class="tab" id="learnTab" type="button" role="tab" aria-selected="true" aria-controls="learnView" data-view="learn"><span class="tab-icon" aria-hidden="true">●</span><span>Учить</span></button>
+          <button class="tab" id="presentTab" type="button" role="tab" aria-selected="false" aria-controls="presentView" data-view="present"><span class="tab-icon" aria-hidden="true">▶</span><span>Выступать</span></button>
+          <button class="tab" id="quizTab" type="button" role="tab" aria-selected="false" aria-controls="quizView" data-view="quiz"><span class="tab-icon" aria-hidden="true">✓</span><span>Проверить</span></button>
         </div>
       </nav>
 
       <main id="main">
         <section id="learnView" role="tabpanel" aria-labelledby="learnTab">
+          <div class="learn-toolbar">
+            <div class="learn-tip">
+              <span class="tip-badge">Начни здесь</span>
+              <div>
+                <strong>Послушай фразу и повтори её вслух</strong>
+                <p>Когда запомнишь — нажми «Я выучил».</p>
+              </div>
+            </div>
+            <div class="display-toggles" aria-label="Отображение подсказок">
+              <label class="switch"><input id="showHints" type="checkbox" checked /> Произношение</label>
+              <label class="switch"><input id="showTranslations" type="checkbox" checked /> Перевод</label>
+            </div>
+          </div>
           <div class="learn-grid">
             <div class="panel list-panel">
               <div class="panel-heading">
@@ -1400,7 +2060,7 @@
 
             <aside class="panel coach" id="coach" aria-label="Тренажёр выбранной фразы">
               <div class="coach-head">
-                <strong>Фраза сейчас</strong>
+                <strong>Учим сейчас</strong>
                 <div class="sound-wave" id="coachWave" aria-hidden="true"><span></span><span></span><span></span></div>
                 <span class="coach-step" id="coachStep">1 из 7</span>
               </div>
@@ -1408,13 +2068,18 @@
                 <h2 class="coach-sentence" id="coachSentence"></h2>
                 <p class="coach-chunks" id="coachChunks"></p>
                 <div class="coach-audio">
-                  <button class="button button-primary" id="coachListen" type="button">Слушать</button>
-                  <button class="button button-secondary" id="coachSlow" type="button">Медленно</button>
-                  <button class="button button-secondary repeat-button" id="coachRepeat" type="button">Повторить 3 раза</button>
+                  <button class="button button-primary" id="coachListen" type="button">▶ Слушать</button>
+                  <button class="button button-secondary" id="coachSlow" type="button">0,7× Медленно</button>
+                  <button class="button button-secondary repeat-button" id="coachRepeat" type="button">↻ Три раза</button>
                 </div>
+                <button class="coach-learned" id="coachLearned" type="button" aria-pressed="false"><span class="coach-check" aria-hidden="true">✓</span><span id="coachLearnedText">Я выучил эту фразу</span></button>
                 <div class="info-row coach-hint-row">
-                  <strong>Как прочитать</strong>
+                  <strong>Как прочитать русскими буквами</strong>
                   <p id="coachHint"></p>
+                </div>
+                <div class="info-row coach-ipa-row">
+                  <strong>Английская транскрипция</strong>
+                  <p id="coachIpa"></p>
                 </div>
                 <div class="info-row coach-translation-row">
                   <strong>Что это значит</strong>
@@ -1425,8 +2090,8 @@
                   <div class="word-list" id="coachWords"></div>
                 </div>
                 <div class="coach-nav">
-                  <button class="button button-secondary" id="coachPrev" type="button">Назад</button>
-                  <button class="button button-secondary" id="coachNext" type="button">Дальше</button>
+                  <button class="button button-secondary" id="coachPrev" type="button">← Назад</button>
+                  <button class="button button-secondary" id="coachNext" type="button">Дальше →</button>
                 </div>
                 <div class="practice-steps" aria-label="Порядок заучивания">
                   <span class="practice-step"><b>1</b>Слушай</span>
@@ -1444,7 +2109,8 @@
             <div class="view-toolbar">
               <div>
                 <h2>Режим выступления</h2>
-                <p>Стрелки переключают фразы, пробел включает звук.</p>
+                <p class="desktop-help">Стрелки переключают фразы, пробел включает звук.</p>
+                <p class="mobile-help">Листай карточку пальцем вправо или влево.</p>
               </div>
               <div class="toolbar-actions">
                 <label class="switch"><input id="stageShowHint" type="checkbox" /> Показать подсказки</label>
@@ -1462,10 +2128,10 @@
                 <p class="stage-hint" id="stageHint" hidden></p>
                 <p class="stage-translation" id="stageTranslation" hidden></p>
                 <div class="stage-actions">
-                  <button class="button button-ghost-light" id="stagePrev" type="button">Предыдущая</button>
-                  <button class="button button-primary" id="stageListen" type="button">Слушать фразу</button>
-                  <button class="button button-ghost-light" id="stageSlow" type="button">Медленно</button>
-                  <button class="button button-ghost-light" id="stageNext" type="button">Следующая</button>
+                  <button class="button button-ghost-light" id="stagePrev" type="button">← Назад</button>
+                  <button class="button button-primary" id="stageListen" type="button">▶ Слушать</button>
+                  <button class="button button-ghost-light" id="stageSlow" type="button">0,7× Медленно</button>
+                  <button class="button button-ghost-light" id="stageNext" type="button">Дальше →</button>
                 </div>
                 <div class="stage-dots" id="stageDots" aria-label="Выбор фразы"></div>
               </div>
@@ -1489,7 +2155,7 @@
               <h2 class="quiz-question" id="quizQuestion"></h2>
               <p class="quiz-prompt">Что означает эта фраза?</p>
               <div class="quiz-listen">
-                <button class="button button-secondary" id="quizListen" type="button">Послушать</button>
+                <button class="button button-secondary" id="quizListen" type="button">▶ Послушать</button>
               </div>
               <div class="quiz-options" id="quizOptions"></div>
               <p class="quiz-feedback" id="quizFeedback" aria-live="polite"></p>
@@ -1586,11 +2252,14 @@
         coachSentence: document.getElementById("coachSentence"),
         coachChunks: document.getElementById("coachChunks"),
         coachHint: document.getElementById("coachHint"),
+        coachIpa: document.getElementById("coachIpa"),
         coachTranslation: document.getElementById("coachTranslation"),
         coachWords: document.getElementById("coachWords"),
         coachListen: document.getElementById("coachListen"),
         coachSlow: document.getElementById("coachSlow"),
         coachRepeat: document.getElementById("coachRepeat"),
+        coachLearned: document.getElementById("coachLearned"),
+        coachLearnedText: document.getElementById("coachLearnedText"),
         coachPrev: document.getElementById("coachPrev"),
         coachNext: document.getElementById("coachNext"),
         playAll: document.getElementById("playAll"),
@@ -1629,7 +2298,9 @@
         quizIndex: 0,
         quizScore: 0,
         quizAnswered: 0,
-        noticeTimer: null
+        noticeTimer: null,
+        stageTouchStartX: null,
+        stageTouchStartY: null
       };
 
       function readLearned() {
@@ -1675,6 +2346,10 @@
         }
         if (view === "quiz") renderQuiz();
         stopSpeech(false);
+        if (window.matchMedia("(max-width: 720px)").matches) {
+          const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+          window.scrollTo({ top: 0, behavior: reduced ? "auto" : "smooth" });
+        }
       }
 
       function renderSentenceList() {
@@ -1692,8 +2367,8 @@
                 </span>
               </button>
               <div class="sentence-actions">
-                <button class="sound-button" type="button" data-speak="${index}" data-rate="0.86" aria-label="Прослушать фразу ${index + 1}">Слушать</button>
-                <button class="sound-button" type="button" data-speak="${index}" data-rate="0.62" aria-label="Прослушать фразу ${index + 1} медленно">Медленно</button>
+                <button class="sound-button" type="button" data-speak="${index}" data-rate="0.86" aria-label="Прослушать фразу ${index + 1}">▶ Слушать</button>
+                <button class="sound-button" type="button" data-speak="${index}" data-rate="0.62" aria-label="Прослушать фразу ${index + 1} медленно">0,7× Медленно</button>
                 <label class="learn-check"><input type="checkbox" data-learn="${index}" ${learned ? "checked" : ""} /> Выучил</label>
               </div>
             </article>`;
@@ -1707,19 +2382,27 @@
         els.coachSentence.textContent = sentence.text;
         els.coachChunks.textContent = sentence.chunks;
         els.coachHint.textContent = sentence.hint;
+        els.coachIpa.textContent = sentence.ipa;
         els.coachTranslation.textContent = sentence.translation;
         els.coachWords.innerHTML = sentence.words
           .map(([english, russian]) => `<span class="word-chip">${english} — ${russian}</span>`)
           .join("");
         els.coachPrev.disabled = state.selected === 0;
         els.coachNext.disabled = state.selected === sentences.length - 1;
+        const learned = state.learned.has(state.selected);
+        els.coachLearned.setAttribute("aria-pressed", String(learned));
+        els.coachLearnedText.textContent = learned ? "Фраза выучена" : "Я выучил эту фразу";
       }
 
-      function selectSentence(index) {
+      function selectSentence(index, revealCoach = false) {
         const next = Math.max(0, Math.min(sentences.length - 1, index));
         state.selected = next;
         renderSentenceList();
         renderCoach();
+        if (revealCoach && window.matchMedia("(max-width: 920px)").matches) {
+          const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+          window.setTimeout(() => els.coach.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" }), 30);
+        }
       }
 
       function updateProgress() {
@@ -1734,6 +2417,7 @@
         else state.learned.delete(index);
         saveLearned();
         renderSentenceList();
+        renderCoach();
         if (state.learned.size === sentences.length) showNotice("Отлично! Все фразы отмечены как выученные.");
       }
 
@@ -1911,7 +2595,7 @@
           return;
         }
         const selectButton = event.target.closest("button[data-select]");
-        if (selectButton) selectSentence(Number(selectButton.dataset.select));
+        if (selectButton) selectSentence(Number(selectButton.dataset.select), true);
       });
 
       els.sentenceList.addEventListener("change", (event) => {
@@ -1929,6 +2613,7 @@
       els.coachListen.addEventListener("click", () => speakOne(state.selected, 0.86));
       els.coachSlow.addEventListener("click", () => speakOne(state.selected, 0.62));
       els.coachRepeat.addEventListener("click", () => speakSequence([state.selected, state.selected, state.selected], 0.68));
+      els.coachLearned.addEventListener("click", () => toggleLearned(state.selected, !state.learned.has(state.selected)));
       els.coachPrev.addEventListener("click", () => selectSentence(state.selected - 1));
       els.coachNext.addEventListener("click", () => selectSentence(state.selected + 1));
       els.playAll.addEventListener("click", () => speakSequence(sentences.map((_item, index) => index), 0.78));
@@ -1945,6 +2630,27 @@
         state.present = Number(dot.dataset.stageIndex);
         renderPresent();
       });
+
+      els.presentStage.addEventListener("touchstart", (event) => {
+        if (event.touches.length !== 1 || event.target.closest("button, label, input")) return;
+        state.stageTouchStartX = event.touches[0].clientX;
+        state.stageTouchStartY = event.touches[0].clientY;
+      }, { passive: true });
+
+      els.presentStage.addEventListener("touchend", (event) => {
+        if (state.stageTouchStartX === null || !event.changedTouches.length) return;
+        const deltaX = event.changedTouches[0].clientX - state.stageTouchStartX;
+        const deltaY = event.changedTouches[0].clientY - state.stageTouchStartY;
+        state.stageTouchStartX = null;
+        state.stageTouchStartY = null;
+        if (Math.abs(deltaX) < 48 || Math.abs(deltaX) < Math.abs(deltaY) * 1.25) return;
+        movePresent(deltaX < 0 ? 1 : -1);
+      }, { passive: true });
+
+      els.presentStage.addEventListener("touchcancel", () => {
+        state.stageTouchStartX = null;
+        state.stageTouchStartY = null;
+      }, { passive: true });
 
       els.fullscreenButton.addEventListener("click", async () => {
         try {
